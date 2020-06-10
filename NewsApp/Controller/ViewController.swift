@@ -18,6 +18,7 @@ class ViewController: UIViewController {
     private let mainTable: UITableView = {
         let tv = UITableView()
         tv.register(ArticleCell.self, forCellReuseIdentifier: reuseIdentifier)
+        tv.separatorStyle = .none
         return tv
     }()
 
@@ -53,6 +54,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vcToGoTo = WebViewController()
+        vcToGoTo.selectedArticle = articles[indexPath.row]
+        tableView.deselectRow(at: tableView.indexPathForSelectedRow!, animated: true)
+        navigationController?.pushViewController(vcToGoTo, animated: true)
     }
 }
 

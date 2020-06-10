@@ -14,6 +14,8 @@ class ArticleCell: UITableViewCell {
         didSet {
             newsImageView.image = nil
             newsLabel.text = ""
+            newsImageView.alpha = 0
+            newsLabel.alpha = 0
             configureCell()
         }
     }
@@ -57,12 +59,20 @@ class ArticleCell: UITableViewCell {
         guard let article = articleToDisplay else { return }
         newsLabel.text = article.title
         
+        UIView.animate(withDuration: 0.6, delay: 0, options: .curveEaseOut, animations: {
+            self.newsLabel.alpha = 1
+        }, completion: nil)
         
         guard article.urlToImage != nil else { return }
         let urlString = article.urlToImage!
         
         if let imageData = CacheManager.retrieveData(urlString) {
             newsImageView.image = UIImage(data: imageData)
+            
+            UIView.animate(withDuration: 0.6, delay: 0, options: .curveEaseOut, animations: {
+                self.newsImageView.alpha = 1
+            }, completion: nil)
+            
             return
         }
         
@@ -80,6 +90,10 @@ class ArticleCell: UITableViewCell {
                         
                         DispatchQueue.main.async {
                             self.newsImageView.image = UIImage(data: data!)
+                            
+                            UIView.animate(withDuration: 0.6, delay: 0, options: .curveEaseOut, animations: {
+                                self.newsImageView.alpha = 1
+                            }, completion: nil)
                         }
                         
                     }
