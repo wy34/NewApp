@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
     // MARK: - Properties
     var model = ArticleModel()
+    var articles = [Article]()
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -26,6 +27,6 @@ class ViewController: UIViewController {
 // MARK: - ArticleModel Delegate methods
 extension ViewController: ArticleModelProtocol {
     func articlesRetrieved(_ articles: [Article]) {
-        print("articles retrieved")
+        self.articles = articles
     }
 }
