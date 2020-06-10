@@ -29,6 +29,7 @@ class ViewController: UIViewController {
         mainTable.dataSource = self
         model.delegate = self
         model.getArticles()
+        mainTable.rowHeight = 100
     }
 
     // MARK: - Helpers

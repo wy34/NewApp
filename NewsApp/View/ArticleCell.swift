@@ -58,9 +58,13 @@ class ArticleCell: UITableViewCell {
         newsLabel.text = article.title
         
         
-        
         guard article.urlToImage != nil else { return }
         let urlString = article.urlToImage!
+        
+        if let imageData = CacheManager.retrieveData(urlString) {
+            newsImageView.image = UIImage(data: imageData)
+            return
+        }
         
         if let url = URL(string: urlString) {
             
@@ -70,12 +74,12 @@ class ArticleCell: UITableViewCell {
                 
                 if error == nil && data != nil {
                     
+                    CacheManager.saveData(urlString, data!)
+                    
                     if self.articleToDisplay!.urlToImage == urlString {
                         
                         DispatchQueue.main.async {
-                            
                             self.newsImageView.image = UIImage(data: data!)
-                            
                         }
                         
                     }
